@@ -30,6 +30,16 @@ spec:
     - host: autest.dev
       http:
         paths:
+          - path: /api/test-writer.*
+            pathType: Prefix
+            backend:
+              service:
+                name: test-writer-srv
+                port:
+                  number: 3000
+    - host: autest.dev
+      http:
+        paths:
           - path: /.*
             pathType: Prefix
             backend:

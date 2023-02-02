@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-writer-depl
+spec:
+  selector:
+    matchLabels:
+      app: test-writer
+  template:
+    metadata:
+      labels:
+        app: test-writer
+    spec:
+      containers:
+        - name: test-writer
+          image: nericoder/autest/test-writer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-writer-srv
+spec:
+  selector:
+    app: test-writer
+  ports:
+    - port: 3000
+      targetPort: 3000

@@ -1,14 +1,18 @@
+import { Upload, message } from 'antd'
+
 import { InboxOutlined } from '@ant-design/icons';
-import { Upload } from 'antd'
+
 const { Dragger } = Upload;
 
 const Demo = () => {
   const props = {
     name: 'file',
-    multiple: true,
-    action: 'http://test-writer-srv:3000/api/test-writer',
+    action: 'https://autest.dev/api/test-writer',
     onChange(info) {
       const { status } = info.file;
+      if (info?.file?.response) {
+        console.log("RESPONSE", info.file.response)
+      }
       if (status !== 'uploading') {
         console.log(info.file, info.fileList);
       }

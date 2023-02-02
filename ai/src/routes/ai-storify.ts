@@ -9,7 +9,7 @@ router.get("/api/ai/storify/file", async (req, res, next) => {
 router.post("/api/ai/storify/file", async (req, res, next) => {
 	const ai = new OpenAI();
 
-	const functions = req.body.functions;
+	const fileData = req.body.fileData;
 
 	const prompt = `
 		Act as a code summorizer. Create a table with a row for each function with the following columns:
@@ -18,10 +18,8 @@ router.post("/api/ai/storify/file", async (req, res, next) => {
 		3. return: what the function returns.
 		4. goal: the goal of the function.
 
-		Functions:
-		${functions.join(`
-		
-		`)}
+		file:
+		${fileData}
 	`;
 
 	const result = await ai.execute(prompt);
