@@ -29,7 +29,7 @@ class OpenAI {
 				prompt,
 				...this.settings,
 			});
-			console.log("AAAIIII", response);
+
 			return {
 				...response.data,
 			};

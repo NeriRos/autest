@@ -29,7 +29,7 @@ class CodeExtractor {
 			const ai = new OpenAI();
 
 			const prompt = `
-				Act as a code summorizer. Create a table with a row for each function with the following columns:
+				Act as a code summorizer. Create a table with a row for each function with exactly 4 columns:
 				1. name: function name.
 				2. arguments: the arguments the function receives.
 				3. return: what the function returns.
@@ -40,6 +40,7 @@ class CodeExtractor {
 			`;
 
 			const result = await ai.execute(prompt);
+
 			if (result) {
 				const json = ai.tableToJson(
 					result.choices
