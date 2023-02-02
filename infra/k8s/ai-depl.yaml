@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: ai
-          image: nericoder/ai
+          image: nericoder/autest/ai
 ---
 apiVersion: v1
 kind: Service

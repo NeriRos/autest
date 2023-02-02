@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: storify-depl
+  name: client-depl
 spec:
   selector:
     matchLabels:
-      app: storify
+      app: client
   template:
     metadata:
       labels:
-        app: storify
+        app: client
     spec:
       containers:
-        - name: storify
-          image: nericoder/autest/storify
+        - name: client
+          image: nericoder/autest/client
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: storify-srv
+  name: client-srv
 spec:
   selector:
-    app: storify
+    app: client
   ports:
     - port: 3000
       targetPort: 3000

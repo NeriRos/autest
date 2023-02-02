@@ -8,7 +8,7 @@ build:
   local:
     push: false
   artifacts:
-    - image: nericoder/ai
+    - image: nericoder/autest/ai
       context: ai
       docker:
         dockerfile: Dockerfile
@@ -16,11 +16,19 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: nericoder/storify
+    - image: nericoder/autest/storify
       context: storify
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
           - src: "src/**/*.ts"
+            dest: .
+    - image: nericoder/autest/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
             dest: .
