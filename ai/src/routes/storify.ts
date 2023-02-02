@@ -2,6 +2,9 @@ import OpenAI from "../services/openai";
 import express from "express";
 
 const router = express.Router();
+router.get("/api/ai/storify/file", async (req, res, next) => {
+	res.json({ test: "Tete" });
+});
 
 router.post("/api/ai/storify/file", async (req, res, next) => {
 	const ai = new OpenAI();

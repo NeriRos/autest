@@ -17,3 +17,13 @@ spec:
                 name: ai-srv
                 port:
                   number: 3000
+    - host: autest.dev
+      http:
+        paths:
+          - path: /api/storify.*
+            pathType: Prefix
+            backend:
+              service:
+                name: storify-srv
+                port:
+                  number: 3001
