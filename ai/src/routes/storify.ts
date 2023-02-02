@@ -22,7 +22,7 @@ router.post("/api/ai/storify/file", async (req, res, next) => {
 	`;
 
 	const result = await ai.execute(prompt);
-	
+
 	res.json({ result });
 });
 

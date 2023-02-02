@@ -12,15 +12,14 @@ class OpenAI {
 	private settings: OpenAISettings;
 
 	constructor(settings?: OpenAISettings) {
-		if (!settings)
-			this.settings = {
-				frequency_penalty: 0.1,
-				presence_penalty: 0.1,
-				top_p: 0.9,
-				max_tokens: 3000,
-				temperature: 0.8,
-				best_of: 2,
-			};
+		this.settings = settings || {
+			frequency_penalty: 0.1,
+			presence_penalty: 0.1,
+			top_p: 0.9,
+			max_tokens: 3000,
+			temperature: 0.8,
+			best_of: 2,
+		};
 	}
 
 	async execute(prompt: string) {
