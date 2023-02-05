@@ -1,4 +1,6 @@
-import { Configuration, OpenAIApi } from "openai";
+import { Configuration, CreateCompletionResponse, OpenAIApi } from "openai";
+
+import csv from "csvtojson";
 
 const configuration = new Configuration({
 	organization: "org-tG6hzns9pMBjLdXS0fpy115a",
@@ -22,7 +24,7 @@ class OpenAI {
 		};
 	}
 
-	async execute(prompt: string) {
+	async execute(prompt: string): Promise<CreateCompletionResponse | undefined> {
 		try {
 			const response = await openai.createCompletion({
 				model: this.model,
@@ -35,8 +37,15 @@ class OpenAI {
 			};
 		} catch (e) {
 			console.log(e);
-			return e;
 		}
+	}
+
+	async tableToJson(data: string) {
+		return csv({
+			noheader: true,
+			output: "csv",
+			delimiter: "\t",
+		}).fromString(data);
 	}
 }
 

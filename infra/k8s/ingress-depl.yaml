@@ -10,36 +10,27 @@ spec:
     - host: autest.dev
       http:
         paths:
-          - path: /api/ai.*
+          - path: /api/ai/?(.*)
             pathType: Prefix
             backend:
               service:
                 name: ai-srv
                 port:
                   number: 3000
-    - host: autest.dev
-      http:
-        paths:
-          - path: /api/storify.*
+          - path: /api/storify/?(.*)
             pathType: Prefix
             backend:
               service:
                 name: storify-srv
                 port:
                   number: 3000
-    - host: autest.dev
-      http:
-        paths:
-          - path: /api/test-writer.*
+          - path: /api/test-writer/(.*)
             pathType: Prefix
             backend:
               service:
                 name: test-writer-srv
                 port:
                   number: 3000
-    - host: autest.dev
-      http:
-        paths:
           - path: /.*
             pathType: Prefix
             backend:
@@ -47,3 +38,11 @@ spec:
                 name: client-srv
                 port:
                   number: 3000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: ingress-external
+spec:
+  type: ExternalName
+  externalName: ingress-nginx-controller.ingress-nginx.svc.cluster.local
