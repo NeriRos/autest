@@ -1,0 +1,23 @@
+{
+  "name": "@autest/common_simple",
+  "version": "1.0.0",
+  "description": "Shares common code between services",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "clean": "del ./build/*",
+    "build": "npm run clean && tsc",
+    "pub": "git add . && git commit -m \"Updates\" && npm version patch && npm run build && npm publish"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ts-node-dev": "^2.0.0",
+    "amqplib": "^0.10.3"
+  },
+  "devDependencies": {
+    "@types/amqplib": "^0.10.1",
+    "del-cli": "^4.0.1",
+    "typescript": "^4.7.4"
+  }
+}

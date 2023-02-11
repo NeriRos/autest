@@ -1,0 +1,10 @@
+apiVersion: scripts.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: rabbitmq-instance
+#spec:
+#  scripts:
+#    additionalConfig: |
+#      default_user=guest
+#      default_pass=guest
+#      auth_mechanisms.1=PLAIN
