@@ -1,6 +1,10 @@
 import * as amqp from 'amqplib'
+import {Listener} from './events/base-listener';
+import {Publisher} from './events/base-publisher';
+import {Subjects} from './events/subjects'
+import * as SpecificSubjects from './events/specific-subjects'
 
-async function connectRabbitMQ() {
+async function createChannel() {
     const host = process.env.RABBITMQ_HOST
     const username = process.env.RABBITMQ_USERNAME;
     const password = process.env.RABBITMQ_PASSWORD;
@@ -9,8 +13,6 @@ async function connectRabbitMQ() {
     const connection = await amqp.connect(url);
     const channel = await connection.createChannel();
 
-    console.log("Listening on RabbitMQ")
-
     return {
         connection,
         channel
@@ -18,5 +20,9 @@ async function connectRabbitMQ() {
 }
 
 export {
-    connectRabbitMQ
+    createChannel,
+    Listener,
+    Publisher,
+    Subjects,
+    SpecificSubjects
 }
