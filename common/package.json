@@ -1,6 +1,6 @@
 {
   "name": "@autest/common-v2",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Shares common code between services",
   "publishConfig": {
     "access": "public"
