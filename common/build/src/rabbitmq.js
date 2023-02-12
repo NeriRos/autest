@@ -32,7 +32,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SpecificSubjects = exports.Subjects = exports.Publisher = exports.Listener = exports.createChannel = void 0;
+exports.Events = exports.Subjects = exports.Publisher = exports.Listener = exports.createChannel = void 0;
 const amqp = __importStar(require("amqplib"));
 const base_listener_1 = require("./events/base-listener");
 Object.defineProperty(exports, "Listener", { enumerable: true, get: function () { return base_listener_1.Listener; } });
@@ -40,8 +40,8 @@ const base_publisher_1 = require("./events/base-publisher");
 Object.defineProperty(exports, "Publisher", { enumerable: true, get: function () { return base_publisher_1.Publisher; } });
 const subjects_1 = require("./events/subjects");
 Object.defineProperty(exports, "Subjects", { enumerable: true, get: function () { return subjects_1.Subjects; } });
-const SpecificSubjects = __importStar(require("./events/specific-subjects"));
-exports.SpecificSubjects = SpecificSubjects;
+const Events = __importStar(require("./events/specific-events"));
+exports.Events = Events;
 function createChannel() {
     return __awaiter(this, void 0, void 0, function* () {
         const host = process.env.RABBITMQ_HOST;

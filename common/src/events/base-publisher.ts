@@ -3,7 +3,6 @@ import {Channel, Connection} from "amqplib";
 
 export abstract class Publisher<T extends BaseEvent> {
     abstract subject: T['subject'];
-    abstract groupName: string;
 
     constructor(private connection: Connection, private channel: Channel) {
     }
