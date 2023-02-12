@@ -1,6 +1,6 @@
 {
   "name": "@autest/common-v2",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Shares common code between services",
   "publishConfig": {
     "access": "public"
@@ -10,7 +10,6 @@
   "files": [
     "build/**/*"
   ],
-  "type": "module",
   "scripts": {
     "clean": "del ./build/*",
     "build": "npm run clean && tsc",
