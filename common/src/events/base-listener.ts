@@ -6,18 +6,17 @@ import {BaseEvent} from "./base-event";
 export abstract class Listener<T extends BaseEvent> {
     abstract subject: T['subject'];
     abstract groupName: string;
-    protected channel?: Channel;
 
     abstract onMessage(data: T['data'], msg: Message): void;
 
-    constructor(private connection: Connection, channel?: Channel) {
-        this.channel = channel;
+    constructor(protected connection: Connection, protected channel?: Channel) {
+        if (!channel) {
+            connection.createChannel().then((channel) => {
+                this.channel = channel
 
-        connection.createChannel().then((channel) => {
-            this.channel = channel
-
-            this.listen()
-        });
+                this.listen()
+            });
+        }
     }
 
     protected async listen() {
@@ -33,7 +32,7 @@ export abstract class Listener<T extends BaseEvent> {
                 this.onMessage(parsedData, msg);
             }
         }, {
-            noAck: true
+            noAck: false
         });
     }
 

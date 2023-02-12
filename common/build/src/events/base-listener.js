@@ -13,9 +13,9 @@ exports.Listener = void 0;
 class Listener {
     constructor(connection, channel) {
         this.connection = connection;
+        this.channel = channel;
         // private getQueueName = () => `${this.groupName}:${this.subject}`;
         this.getQueueName = () => this.subject;
-        this.channel = channel;
         connection.createChannel().then((channel) => {
             this.channel = channel;
             this.listen();
@@ -33,7 +33,7 @@ class Listener {
                     this.onMessage(parsedData, msg);
                 }
             }), {
-                noAck: true
+                noAck: false
             });
         });
     }

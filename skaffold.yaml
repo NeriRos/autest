@@ -2,10 +2,10 @@ apiVersion: skaffold/v4beta2
 kind: Config
 manifests:
   rawYaml:
+    - ./infra/k8s/rabbitmq-depl.yaml
     - ./infra/k8s/client-depl.yaml
     - ./infra/k8s/ai-depl.yaml
     - ./infra/k8s/test-writer-depl.yaml
-    - ./infra/k8s/rabbitmq-depl.yaml
     - ./infra/k8s/ingress-depl.yaml
 build:
   local:
