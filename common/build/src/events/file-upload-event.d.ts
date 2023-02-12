@@ -3,6 +3,6 @@ import { BaseEvent } from "./base-event";
 export interface FileUploadEvent extends BaseEvent {
     subject: Subjects.FileUpload;
     data: {
-        file: File;
+        file: string;
     };
 }

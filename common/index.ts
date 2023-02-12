@@ -1,1 +1,1 @@
-export * from "./src/rabbitmq"
+export * as RabbitMQ from "./src/rabbitmq"
