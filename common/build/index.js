@@ -23,5 +23,5 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RabbitMQ = void 0;
-exports.RabbitMQ = __importStar(require("./src/rabbitmq"));
+exports.default = void 0;
+exports.default = __importStar(require("./src/rabbitmq"));
