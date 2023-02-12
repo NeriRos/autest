@@ -1,6 +1,6 @@
 {
   "name": "@autest/common-v2",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Shares common code between services",
   "type": "module",
   "main": "index.js",
