@@ -1,9 +1,13 @@
 {
   "name": "@autest/common-v2",
-  "version": "1.0.4",
+  "version": "1.0.0",
   "description": "Shares common code between services",
   "type": "module",
   "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "private": false,
   "scripts": {
     "clean": "del ./build/*",
     "build": "npm run clean && tsc",

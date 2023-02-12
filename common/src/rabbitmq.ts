@@ -2,7 +2,7 @@ import * as amqp from 'amqplib'
 import {Listener} from './events/base-listener';
 import {Publisher} from './events/base-publisher';
 import {Subjects} from './events/subjects'
-import * as SpecificSubjects from './events/specific-subjects'
+import * as Events from './events/specific-events'
 
 async function createChannel() {
     const host = process.env.RABBITMQ_HOST
@@ -24,5 +24,5 @@ export {
     Listener,
     Publisher,
     Subjects,
-    SpecificSubjects
+    Events
 }
