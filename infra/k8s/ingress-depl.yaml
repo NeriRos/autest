@@ -10,28 +10,14 @@ spec:
     - host: autest.dev
       http:
         paths:
-          - path: /api/ai/?(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: ai-srv
-                port:
-                  number: 3000
-          - path: /api/storify/?(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: storify-srv
-                port:
-                  number: 3000
-          - path: /api/test-writer/(.*)
+          - path: /api/(.*)
             pathType: Prefix
             backend:
               service:
                 name: test-writer-srv
                 port:
                   number: 3000
-          - path: /.*
+          - path: /(.*)
             pathType: Prefix
             backend:
               service:

@@ -1,18 +1,38 @@
 import OpenAI from "../services/openai";
 import express from "express";
+import {createChannel} from '@autest/common-v2'
+import {Channel, Connection} from "amqplib";
+import {FileUploadListener} from "../listeners/file-upload-listener";
 
-const router = express.Router();
-console.log("teadsadsddas")
-router.get("/api/ai/storify/file", async (req, res, next) => {
-  res.status(200).json({ test: "Tete" });
-});
+let connection: Connection, channel: Channel;
 
-router.post("/api/ai/storify/file", async (req, res, next) => {
-  const ai = new OpenAI();
+createChannel().then(async ({connection: conn, channel: ch}) => {
+    connection = conn;
+    channel = ch;
 
-  const fileData = req.body.fileData;
+    console.log("Connected to channel")
 
-  const prompt = `
+    await subscribeFileUpload()
+})
+
+async function subscribeFileUpload() {
+    const queue = 'file_upload';
+
+    const listener = new FileUploadListener(connection, channel)
+    // await listenQueue(channel, queue, async (msg) => {
+    //     const fileData = msg.content.toString();
+    //     const story = await storifyFile(fileData)
+    //
+    //     console.log("STORY", story)
+    //
+    //     channel.ack(msg);
+    // })
+}
+
+async function storifyFile(fileData: string) {
+    const ai = new OpenAI();
+
+    const prompt = `
 		Act as a code summorizer. Create a table with a row for each function with exactly 4 columns:
 		1. name: function name.
 		2. arguments: the arguments the function receives.
@@ -23,16 +43,29 @@ router.post("/api/ai/storify/file", async (req, res, next) => {
 		${fileData}
 	`;
 
-  const result = await ai.execute(prompt);
+    const result = await ai.execute(prompt);
 
-  if (result) {
-    const text = result.choices.map((choice) => choice.text).join();
-    const json = ai.tableToJson(text);
+    if (result) {
+        const text = result.choices.map((choice) => choice.text).join();
+        const json = ai.tableToJson(text);
 
-    return res.json({ result: json });
-  }
+        return json
+    }
+}
 
-  return res.status(400).json({ result: null });
+const router = express.Router();
+
+router.post("/api/ai/storify/file", async (req, res, next) => {
+
+    const fileData = req.body.fileData;
+
+    const story = await storifyFile(fileData)
+
+    if (story) {
+        return res.json({story});
+    }
+
+    return res.status(400).json({story: null});
 });
 
-export { router as storify };
+export {router as storify};

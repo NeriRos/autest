@@ -14,6 +14,22 @@ spec:
       containers:
         - name: test-writer
           image: nericoder/autest/test-writer
+          env:
+            - name: RABBITMQ_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: autest-exchanger-default-user
+            - name: RABBITMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: autest-exchanger-default-user
+            - name: RABBITMQ_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: host
+                  name: autest-exchanger-default-user
 ---
 apiVersion: v1
 kind: Service

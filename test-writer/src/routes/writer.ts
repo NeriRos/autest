@@ -1,49 +1,59 @@
-import CodeExtractor from "../services/code-extractor";
-import axios from "axios";
 import express from "express";
 import multer from "multer";
+import {createChannel} from '@autest/common-v2'
+import {Channel, Connection} from "amqplib";
+import {strict as assert} from 'node:assert';
+import {FileUploadPublisher} from "../publishers/file-upload-publisher";
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "storage");
-  },
-  filename: function (req, file, cb) {
-    // You could rename the file name
-    // cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+let connection: Connection, channel: Channel;
 
-    // You could use the original name
-    cb(null, file.originalname);
-  },
-});
+createChannel().then(async ({connection: conn, channel: ch}) => {
+    connection = conn;
+    channel = ch;
 
-var upload = multer({ storage: storage });
+    console.log("Connected to channel")
+})
+
+
+async function publishFileUpload(fileBuffer: Buffer) {
+    const publisher = new FileUploadPublisher(connection, channel);
+    const file = fileBuffer.toString('utf-8')
+
+    const result = await publisher.publish({
+        file
+    });
+
+    console.log("Published", result)
+
+    // assert.notEqual(channel, undefined, 'Channel is undefined');
+    //
+    // await channel.assertQueue(queue);
+    //
+    // channel.sendToQueue(queue, fileBuffer);
+}
+
+
+const storage = multer.memoryStorage()
+var upload = multer({storage: storage});
 
 const router = express.Router();
 
 router.post(
-  "/api/test-writer",
-  upload.single("file"),
-  async (req, res, next) => {
-    try {
-      if (req.file) {
-        const extractor = new CodeExtractor(req.file.path);
-        const test = await axios.get(
-          "http://ingress-external/api/ai/storify/file",
-          {
-            headers: {
-              Host: "autest.dev",
-            },
-          }
-        );
-        console.log(test.data);
-        return res.status(200).json({ test: "tt" });
-      }
-    } catch (err) {
-      console.log("Can't read file", err);
-    }
+    "/api/test-writer",
+    upload.single("file"),
+    async (req, res, next) => {
+        try {
+            if (req.file) {
+                await publishFileUpload(req.file.buffer)
 
-    res.status(400);
-  }
+                return res.status(200).json({test: "tt"});
+            }
+        } catch (err) {
+            console.log("Can't read file", err);
+        }
+
+        res.status(400);
+    }
 );
 
-export { router as writer };
+export {router as writer};

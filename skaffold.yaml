@@ -1,9 +1,12 @@
-apiVersion: skaffold/v2alpha3
+apiVersion: skaffold/v4beta2
 kind: Config
-deploy:
-  kubectl:
-    manifests:
-      - ./infra/k8s/*
+manifests:
+  rawYaml:
+    - ./infra/k8s/client-depl.yaml
+    - ./infra/k8s/ai-depl.yaml
+    - ./infra/k8s/test-writer-depl.yaml
+    - ./infra/k8s/rabbitmq-depl.yaml
+    - ./infra/k8s/ingress-depl.yaml
 build:
   local:
     push: false
@@ -12,14 +15,7 @@ build:
       context: ai
       docker:
         dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: "src/**/*.ts"
-            dest: .
-    - image: nericoder/autest/storify
-      context: storify
-      docker:
-        dockerfile: Dockerfile
+        noCache: true
       sync:
         manual:
           - src: "src/**/*.ts"
@@ -28,6 +24,7 @@ build:
       context: test-writer
       docker:
         dockerfile: Dockerfile
+        noCache: true
       sync:
         manual:
           - src: "src/**/*.ts"
@@ -36,7 +33,17 @@ build:
       context: client
       docker:
         dockerfile: Dockerfile
+        noCache: true
       sync:
         manual:
           - src: "**/*.js"
             dest: .
+#    - image: nericoder/autest/storify
+#      context: storify
+#      docker:
+#        dockerfile: Dockerfile
+#        noCache: true
+#      sync:
+#        manual:
+#          - src: "src/**/*.ts"
+#            dest: .
